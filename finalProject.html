@@ -1,0 +1,5846 @@
+<html>
+
+<title>Scene</title>
+
+<p> </p>
+<button id = "Button1">Rotate Forwards</button>
+<button id = "Button2">Rotate Backwards</button>
+<button id = "Button3">Rotate Right</button>
+<button id = "Button4">Rotate Left</button>
+
+<p> </p>
+<button id = "Button5">Spin Left</button>
+<button id = "Button6">Spin Right</button>
+<p> </p>
+
+
+<! -- Numbers on Lockers Top -- >
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute vec4 vColor;
+mat4 modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, s.z, 0.0, 0.0,
+		            s.z, c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, -1.0 );
+
+    mat4 tx = mat4(   0.26,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.25,  0.51, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader2" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.26,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             .1,  0.51, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry* tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader3" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.26,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		              0.45,  0.51, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Numbers on Lockers Bottom -- >
+<script id="vertex-shaderA" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.26,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.25,  -0.185, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shaderB" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.26,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.1,  -0.182, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shaderC" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.26,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.45,  -0.182, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Main Locker Block -- >
+<script id="vertex-shader4" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   3,  0.0, 0.0, 0.0,
+		              0.0,  1.85, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		              0,  0.0, 0.0, 1.0 );
+
+    mat4 sx = mat4(0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.75, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.03,  -0.055, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Main Background Block -- >
+<script id="vertex-shader4A" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, -0.5,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   6.0,  0.0, 0.0, 0.0,
+		              0.0,  4.0, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		              0.1,  2.035, 0.0, 1.0 );
+
+    mat4 sx = mat4( 1.2,  0.0, 0.0, 0.0,
+		            0.0,  1.4, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Locker Doors Top -- >
+<script id="vertex-shader5" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   0.95,  0.0, 0.0, 0.0,
+		              0.0,  0.95, 0.0, 0.0,
+		              0.0,  0.0, 1.00, 0.01,
+		              -0.25,  0.2, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.35,  0.0, 0.0, 0.0,
+		            0.0,  0.7, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (ry * rx * tx * sx);
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader6" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   0.95,  0.0, 0.0, 0.0,
+		              0.0,  0.95, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              0.45,  0.2, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.35,  0.0, 0.0, 0.0,
+		            0.0,  0.7, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (ry * rx * tx * sx);
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader7" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   0.95,  0.0, 0.0, 0.0,
+		              0.0,  0.95, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              0.1,  0.20, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.35,  0.0, 0.0, 0.0,
+		            0.0,  0.7, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (ry * rx * tx * sx);
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Locker Doors Bottom  -- >
+<script id="vertex-shader8" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   0.95,  0.0, 0.0, 0.0,
+		              0.0,  1.0, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              0.1,  -0.465, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.35,  0.0, 0.0, 0.0,
+		            0.0,  0.6, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (ry * rx * tx * sx);
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader9" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   0.95,  0.0, 0.0, 0.0,
+		              0.0,  1.0, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              -0.25,  -0.465, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.35,  0.0, 0.0, 0.0,
+		            0.0,  0.6, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (ry * rx * tx * sx);
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader10" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   .95,  0.0, 0.0, 0.0,
+		              0.0,  1.0, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              0.45,  -0.465, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.35,  0.0, 0.0, 0.0,
+		            0.0,  0.6, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (ry * rx * tx * sx);
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Locker Lines Top Left -- >
+<script id="vertex-shader11" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  0.42, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader12" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  0.4, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader13" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  0.38, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader14" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  0.42, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader15" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  0.4, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader16" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  0.38, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader17" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  -0.04, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader18" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  -0.02, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader19" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  -0.06, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader20" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  -0.02, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader21" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  -0.04, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader22" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  -0.06, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Locker Lines Top Middle -- >
+<script id="vertex-shader23" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  0.4, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader24" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  0.42, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader25" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  0.38, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader26" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  0.4, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader27" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  0.42, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+     modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader28" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  0.38, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader29" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  -0.02, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader30" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  -.06, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader31" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  -.04, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader32" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  -.02, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader33" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  -.04, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader34" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  -.06, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Locker Lines Top Right -- >
+<script id="vertex-shader35" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  0.4, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader36" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  0.42, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader37" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  0.38, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader38" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  0.4, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader39" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  0.42, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader40" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  0.38, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader41" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  -0.02, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader42" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  -.06, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader43" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  -.04, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader44" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  -.02, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader45" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  -.04, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader46" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  -.06, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Locker Lines Bottom Left -- >
+<script id="vertex-shader47" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  -0.28, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader48" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  -0.3, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader49" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  -0.32, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader50" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  -0.28, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader51" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  -0.3, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader52" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  -0.32, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader53" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  -0.62, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader54" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  -0.64, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader55" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.3,  -0.66, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader56" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  -0.62, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader57" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  -0.64, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader58" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.17,  -0.66, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Locker Lines Bottom Mid -- >
+<script id="vertex-shader59" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  -0.28, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader60" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  -0.3, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader61" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  -0.32, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader62" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  -0.28, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader63" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  -0.3, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader64" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  -0.32, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader65" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  -0.62, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader66" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  -0.64, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader67" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.05,  -0.66, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader68" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  -0.62, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader69" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  -0.64, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader70" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.18,  -0.66, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Locker Lines Bottom Right -- >
+<script id="vertex-shader71" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  -0.28, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry *tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader72" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  -0.3, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader73" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  -0.32, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx *ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader74" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  -0.28, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx *ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader75" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  -0.3, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx *ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader76" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  -0.32, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader77" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  -0.62, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader78" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  -0.64, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader79" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  -0.66, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader80" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  -0.62, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader81" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  -0.64, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader82" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.2,  0.0, 0.0, 0.0,
+		              0.0,  0.1, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.54,  -0.66, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+
+<! -- Locker Lock Top Left -- >
+<script id="vertex-shader83" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   1.0,  0.0, 0.0, 0.0,
+		              0.0,  1.0, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		              -0.32,  0.2, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader84" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   .8,  0.0, 0.0, 0.0,
+		              0.0, 0.8, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              -0.32,  0.2, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<! -- Locker Lock Top Middle -- >
+<script id="vertex-shader85" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   1.0,  0.0, 0.0, 0.0,
+		              0.0,  1.0, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		              0.035,  0.2, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader86" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   .8,  0.0, 0.0, 0.0,
+		              0.0, 0.8, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              0.035,  0.2, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<! -- Locker Lock Top Right -- >
+<script id="vertex-shader87" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   1.0,  0.0, 0.0, 0.0,
+		              0.0,  1.0, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		              0.4,  0.2, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader88" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   .8,  0.0, 0.0, 0.0,
+		              0.0, 0.8, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              0.4,  0.2, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<! -- Locker Bottom Top Left -- >
+<script id="vertex-shader89" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   1.0,  0.0, 0.0, 0.0,
+		              0.0,  1.0, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		              -0.32,  -0.45, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader90" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   .8,  0.0, 0.0, 0.0,
+		              0.0, 0.8, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              -0.32,  -0.45, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<! -- Locker Lock Bottom Middle -- >
+<script id="vertex-shader91" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   1.0,  0.0, 0.0, 0.0,
+		              0.0,  1.0, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		              0.035,  -0.45, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader92" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   .8,  0.0, 0.0, 0.0,
+		              0.0, 0.8, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              0.035,  -0.45, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<! -- Locker Lock Bottom Right -- >
+<script id="vertex-shader93" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   1.0,  0.0, 0.0, 0.0,
+		              0.0,  1.0, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		              0.4,  -0.45, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader94" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   .8,  0.0, 0.0, 0.0,
+		              0.0, 0.8, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              0.4,  -0.45, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+
+
+<! -- Locker Lock Clasp Top  -- >
+<script id="vertex-shader95" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.03,  0.0, 0.0, 0.0,
+		              0.0,  0.07, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.32,  0.23, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader96" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.03,  0.0, 0.0, 0.0,
+		              0.0,  0.07, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.035,  0.23, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader97" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.03,  0.0, 0.0, 0.0,
+		              0.0,  0.07, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  0.23, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+<! -- Locker Lock Clasp Bottom -- >
+<script id="vertex-shader98" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.03,  0.0, 0.0, 0.0,
+		              0.0,  0.07, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.32,  -0.42, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader99" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.03,  0.0, 0.0, 0.0,
+		              0.0,  0.07, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.035,  -0.42, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader100" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   0.03,  0.0, 0.0, 0.0,
+		              0.0,  0.07, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.4,  -0.42, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+
+<! -- Brick Lines Horizontal -- >
+<script id="vertex-shader101" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   7.5,  0.0, 0.0, 0.0,
+		              0.0,  0.5, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.5,  0.4, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader102" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   7.5,  0.0, 0.0, 0.0,
+		              0.0,  0.5, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.5,  0.2, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader103" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   7.5,  0.0, 0.0, 0.0,
+		              0.0,  0.5, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.5,  0.0, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader104" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   7.5,  0.0, 0.0, 0.0,
+		              0.0,  0.5, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.5,  0.6, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader105" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   7.5,  0.0, 0.0, 0.0,
+		              0.0,  0.5, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.5,  0.815, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader106" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   7.5,  0.0, 0.0, 0.0,
+		              0.0,  0.5, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.5,  -0.2, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader107" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   7.5,  0.0, 0.0, 0.0,
+		              0.0,  0.5, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.5,  -0.4, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader108" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   7.5,  0.0, 0.0, 0.0,
+		              0.0,  0.5, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.5,  -0.6, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader109" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   7.5,  0.0, 0.0, 0.0,
+		              0.0,  0.5, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.5,  -0.8, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = rx * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+
+<! -- Brick Lines Vertical -- >
+<script id="vertex-shader110" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   .5,  0.0, 0.0, 0.0,
+		              0.0,  7, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -1.0,  0.6, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (rx) * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader111" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   .5,  0.0, 0.0, 0.0,
+		              0.0,  7, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -0.5,  0.6, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (rx) * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader112" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   .5,  0.0, 0.0, 0.0,
+		              0.0,  7, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0,  0.6, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (rx) * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader113" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   .5,  0.0, 0.0, 0.0,
+		              0.0,  7, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             0.5,  0.6, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (rx) * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader114" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   .5,  0.0, 0.0, 0.0,
+		              0.0,  7, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -1.0,  0.6, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (rx) * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader115" type="x-shader/x-vertex">
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0,
+		            0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		            s.z,  c.z, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    mat4 tx = mat4(   .5,  0.0, 0.0, 0.0,
+		              0.0,  7, 0.0, 0.0,
+		              0.0,  0.0, 1.0, 0.0,
+		             -1.0,  0.6, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.4,  0.0, 0.0, 0.0,
+		            0.0,  0.4, 0.0, 0.0,
+		            0.0,  0.0, 0.4, 0.0,
+		            0.0,  0.0, 0.024, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = (rx) * ry * tx * sx;
+    // gl_Position = rz * ry * rx * vPosition;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+<script id="vertex-shader116" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+mat4            modelViewMatrix;
+varying vec4 fColor;
+
+uniform vec3 theta;
+
+void main()
+{
+    // Compute the sines and cosines of theta for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( theta );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remember: these matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		            0.0,  c.x,  s.x, 0.0,
+		            0.0, -s.x,  c.x, 0.0,
+		            0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		            0.0, 1.0,  0.0, 0.0,
+		            s.y, 0.0,  c.y, 0.0001,
+		            0.0, 0.0,  0.0, 1.0 );
+
+    mat4 tx = mat4(   2.5,  0.0, 0.0, 10.5,
+		              0.0, 0.4, 0.0, -1.0,
+		              0.0,  0.0, 1.0, 0.01,
+		              -0.8,  0.8, 0.0, 1.0 );
+
+    mat4 sx = mat4( 0.1,  0.0, 0.0, 0.0,
+		            0.0,  0.12, 0.0, 0.0,
+		            0.0,  0.0, 0.2, 0.0,
+		            0.0,  0.0, 0.0, 1.0 );
+
+    fColor = vColor;
+    modelViewMatrix = ry * rx * tx * sx;
+    gl_Position = modelViewMatrix * vPosition;
+}
+</script>
+
+
+
+
+<! --------------------------------------------------------->
+<<script id="fragment-shader" type="x-shader/x-fragment">
+
+// This shader is not used yet. You need to figure out where, how, why
+// Consider the fact that this implementation is vertex-based for now...
+
+precision mediump float;
+
+varying vec4 fColor;
+
+void
+main()
+{
+    gl_FragColor = fColor;
+}
+</script>
+
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="finalProject.js"></script>
+
+<body>
+<canvas id="gl-canvas" width="512" height="512">
+    Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+
+</body>
+</html>
