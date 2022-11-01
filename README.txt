@@ -4,8 +4,8 @@ McKenna Branting
 Files Included: 
 
 ../Stove..
-Scene.js
-Scene.html
+final project.js
+final project.html
 
 /Common...
 - webgl-utils.js
